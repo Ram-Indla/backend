@@ -32,6 +32,15 @@ pipeline{
                 """
             }
         }
+        stage('Read the Version'){
+            steps{
+                script{
+                    def packageJSONFile = readJSON file : 'package.json'
+                    def appVersion = packageJSONFile.version
+                    echo "appVersion is ${appVersion}"
+                }
+            }
+        }
         stage('install depedencies'){
             when{
                 anyOf{
@@ -43,6 +52,7 @@ pipeline{
                 sh """
                 npm install
                 ls -ltr
+                echo "appVersion is ${appVersion}"
                 """
             }
         }
