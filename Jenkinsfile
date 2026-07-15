@@ -5,6 +5,7 @@ pipeline{
 
     environment{
         greetings = 'Good morning'
+        appVersion = ''
     }
 
     options{
@@ -16,7 +17,6 @@ pipeline{
     parameters{
         choice(name: 'Stage_to_run', choices: ['All', 'test', 'Init', 'Plan', 'Apply'] )
     }
-    def appVersion = ''
     stages{
         stage('Test'){
             when{
@@ -36,8 +36,8 @@ pipeline{
             steps{
                 script{
                     def packageJSONFile = readJSON file : 'package.json'
-                    appVersion = packageJSONFile.version
-                    echo "appVersion is $appVersion"
+                    def appVersion = packageJSONFile.version
+                    echo "appVersion is ${appVersion}"
                 }
             }
         }
@@ -52,7 +52,7 @@ pipeline{
                 sh """
                 npm install
                 ls -ltr
-                echo "appVersion is $appVersion"
+                echo "appVersion is ${appVersion}"
                 """
             }
         }
