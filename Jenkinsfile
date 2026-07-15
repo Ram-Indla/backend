@@ -13,7 +13,7 @@ pipeline{
     }
 
     parameters{
-        choice(name: 'Stage to run', defaultValue: ['test', 'Init', 'Plan', 'Apply'] )
+        choice(name: 'Stage to run', choices: ['All', 'test', 'Init', 'Plan', 'Apply'] )
     }
 
     stages{
