@@ -15,29 +15,15 @@ pipeline{
     }
 
     parameters{
-        choice(name: 'Stage_to_run', choices: ['All', 'test', 'Init', 'Plan', 'Apply'] )
+        choice(name: 'Stage_to_run', choices: ['All', 'Install', 'Build'] )
     }
     stages{
-        stage('Test'){
-            when{
-                anyOf{
-                    expression{params.Stage_to_run == 'All'}
-                    expression{params.Stage_to_run == 'test'}
-                }
-            }
-            steps{
-                sh """
-                  echo "hellow this is test"
-                  ls -lrt
-                """
-            }
-        }
         stage('Read the Version'){
             steps{
                 script{
                     def packageJSONFile = readJSON file : 'package.json'
                     appVersion = packageJSONFile.version
-                    echo "appVersion is ${appVersion}"
+                    echo "appVersion is ${appVersion}"              
                 }
             }
         }
@@ -45,7 +31,7 @@ pipeline{
             when{
                 anyOf{
                     expression{params.Stage_to_run == 'All'}
-                    expression{params.Stage_to_run == 'Apply'}
+                    expression{params.Stage_to_run == 'Build'}
                 }
             }
             steps{
@@ -53,6 +39,21 @@ pipeline{
                 npm install
                 ls -ltr
                 echo "appVersion is ${appVersion}"
+                """
+            }
+        }
+        
+        stage('Build'){
+            when{
+                anyOf{
+                    expression{params.Stage_to_run == 'All'}
+                    expression{params.Stage_to_run == 'Build'}
+                }
+            }
+            steps{
+                sh """
+                    zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-$appVersion.zip  
+                    ls -lrt
                 """
             }
         }
