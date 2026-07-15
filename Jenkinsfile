@@ -8,6 +8,7 @@ pipeline{
     }
 
     options{
+        timeout(time: 30, unit: 'MINUTES')
         disableConcurrentBuilds()
         ansiColor('xterm')
     }
@@ -25,21 +26,10 @@ pipeline{
                 """
             }
         }
-        stage('Init'){
+        stage('install depedencies'){
             steps{
                 sh """
-                """
-            }
-        }
-        stage('plan'){
-            steps{
-                sh """
-                """
-            }
-        }
-        stage('apply'){
-            steps{
-                sh """
+                npm install
                 """
             }
         }
