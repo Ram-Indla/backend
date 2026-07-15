@@ -14,11 +14,17 @@ pipeline{
     }
 
     parameters{
-        choice(name: 'Stage to run', choices: ['All', 'test', 'Init', 'Plan', 'Apply'] )
+        choice(name: 'Stage_to_run', choices: ['All', 'test', 'Init', 'Plan', 'Apply'] )
     }
 
     stages{
         stage('Test'){
+            when{
+                anyOf{
+                    expression{params.Stage_to_run == 'All'}
+                    expression{params.Stage_to_run == 'test'}
+                }
+            }
             steps{
                 sh """
                   echo "hellow this is test"
@@ -27,6 +33,12 @@ pipeline{
             }
         }
         stage('install depedencies'){
+            when{
+                anyOf{
+                    expression{params.Stage_to_run == 'All'}
+                    expression{params.Stage_to_run == 'Apply'}
+                }
+            }
             steps{
                 sh """
                 npm install
