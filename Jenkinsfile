@@ -13,10 +13,17 @@ pipeline{
     }
 
     parameters{
-        choice(name: 'Stage to run', defaultValue: ['Init', 'Plan', 'Apply'] )
+        choice(name: 'Stage to run', defaultValue: ['test', 'Init', 'Plan', 'Apply'] )
     }
 
     stages{
+        stage('Test'){
+            steps{
+                sh """
+                  echo "hellow this is test"
+                """
+            }
+        }
         stage('Init'){
             steps{
                 sh """
@@ -37,13 +44,13 @@ pipeline{
         }
         post{
             always{
-                echo "i will always say "
+                echo "i will always say hellow"
             }
             success{
-                echo "i will say when success"
+                echo "i will say hellow when success"
             }
             failure{
-                echo "i will say when failure"
+                echo "i will say when hellow failure"
             }
         }
     }
