@@ -21,6 +21,7 @@ pipeline{
             steps{
                 sh """
                   echo "hellow this is test"
+                  ls -lrt
                 """
             }
         }
