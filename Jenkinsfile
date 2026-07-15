@@ -16,7 +16,7 @@ pipeline{
     parameters{
         choice(name: 'Stage_to_run', choices: ['All', 'test', 'Init', 'Plan', 'Apply'] )
     }
-    ${appVersion} = ''
+    def appVersion = ''
     stages{
         stage('Test'){
             when{
