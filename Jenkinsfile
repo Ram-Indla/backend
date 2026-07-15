@@ -42,16 +42,16 @@ pipeline{
                 """
             }
         }
-        post{
-            always{
-                echo "i will always say hellow"
-            }
-            success{
-                echo "i will say hellow when success"
-            }
-            failure{
-                echo "i will say when hellow failure"
-            }
+    }
+    post{
+        always{
+            echo "i will always say hellow"
+        }
+        success{
+            echo "i will say hellow when success"
+        }
+        failure{
+            echo "i will say when hellow failure"
         }
     }
 }
